@@ -1,0 +1,3 @@
+/e/school_proj/Nuclear_collision/build/CMakeFiles/hg199_sim.dir
+/e/school_proj/Nuclear_collision/build/CMakeFiles/edit_cache.dir
+/e/school_proj/Nuclear_collision/build/CMakeFiles/rebuild_cache.dir

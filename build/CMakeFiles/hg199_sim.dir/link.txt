@@ -1,0 +1,1 @@
+/mingw64/bin/c++.exe -Wl,--enable-auto-import CMakeFiles/hg199_sim.dir/src/main.cpp.o -o hg199_sim.exe -Wl,--out-implib,libhg199_sim.dll.a -Wl,--major-image-version,0,--minor-image-version,0
