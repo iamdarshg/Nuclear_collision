@@ -41,20 +41,7 @@ public:
         // For this placeholder, no complex initialization is performed.
     }
 
-    /**
-     * @brief Evaluates the parton distribution functions (PDFs) at a given x and Q^2.
-     *
-     * @param x The momentum fraction (0 < x <= 1).
-     * @param Q2 The factorization scale squared (Q^2 > 0).
-     * @return A map containing the x*f(x, Q^2) values for each parton flavor.
-     *
-     * IMPORTANT: This is a SIMPLIFIED DUMMY implementation. It does NOT perform
-     * physically accurate PDF calculations based on DGLAP evolution. It uses
-     * simple power-law forms for x-dependence and a basic logarithmic Q^2-dependence
-     * to illustrate a more structured placeholder than arbitrary exponentials.
-     * You MUST replace this with your own DGLAP evolution and interpolation logic
-     * for a physically meaningful simulator.
-     */
+
     std::map<int, double> evaluate_xq2(double x, double Q2) const {
         std::map<int, double> xf_values;
 
@@ -122,30 +109,8 @@ static InternalPDFData s_internal_pdf_data;
  * delegates the actual PDF calculation to the internal 'InternalPDFData'
  * class, thus removing the dependency on APFEL++.
  */
-namespace PDF {
-public:
-    /**
-     * @brief Initializes the PDF calculation system.
-     *
-     * In the original code, this called apfel::InitializeQCD and apfel::BuildPDFs.
-     * With no external libraries, this method would trigger the setup of your
-     * internal PDF evolution framework. For this placeholder, the constructor
-     * of 's_internal_pdf_data' handles any implicit setup.
-     */
-    void initialize();
 
-    /**
-     * @brief Retrieves the x*f(x, Q^2) values for various parton flavors.
-     *
-     * @param x The momentum fraction.
-     * @param Q2 The factorization scale squared.
-     * @return A vector containing the x*f values for up, down, strange, charm,
-     * bottom, and gluon, in that specific order.
-     */
-    std::vector<double> get_flavor_xf(double x, double Q2);
-};
-
-void PDF::initialize() {
+void initialize() {
     // With no external libraries, this method would typically be used to
     // perform any necessary setup for your custom PDF evolution engine.
     // Since 's_internal_pdf_data' is a static object, its constructor
@@ -154,7 +119,7 @@ void PDF::initialize() {
     // For this placeholder, no explicit action is needed here.
 }
 
-std::vector<double> PDF::get_flavor_xf(double x, double Q2) {
+std::vector<double> get_flavor_xf(double x, double Q2) {
     // Call our internal PDF data object to evaluate the PDFs
     auto xf = s_internal_pdf_data.evaluate_xq2(x, Q2);
 
@@ -174,41 +139,41 @@ std::vector<double> PDF::get_flavor_xf(double x, double Q2) {
 // implements them, similar to your original setup.
 // For demonstration purposes, everything is in one block here.
 
-/*
+
 // Example usage (for testing purposes, not part of the original snippet)
-#include <iostream>
+// #include <iostream>
 
-int main() {
-    PDF my_pdf_calculator;
-    my_pdf_calculator.initialize();
+// int main() {
+//     PDF my_pdf_calculator;
+//     my_pdf_calculator.initialize();
 
-    double x_val_low = 0.001;
-    double x_val_mid = 0.1;
-    double x_val_high = 0.8;
-    double Q2_val_low = 1.0;
-    double Q2_val_mid = 10.0;
-    double Q2_val_high = 100.0;
+//     double x_val_low = 0.001;
+//     double x_val_mid = 0.1;
+//     double x_val_high = 0.8;
+//     double Q2_val_low = 1.0;
+//     double Q2_val_mid = 10.0;
+//     double Q2_val_high = 100.0;
 
-    std::cout << "--- Simplified Dummy PDF Values ---" << std::endl;
+//     std::cout << "--- Simplified Dummy PDF Values ---" << std::endl;
 
-    auto print_pdfs = [&](double x, double Q2) {
-        std::vector<double> flavor_xfs = my_pdf_calculator.get_flavor_xf(x, Q2);
-        std::cout << "\nAt x = " << x << ", Q^2 = " << Q2 << " GeV^2" << std::endl;
-        std::cout << "  Up quark (xf):     " << flavor_xfs[0] << std::endl;
-        std::cout << "  Down quark (xf):   " << flavor_xfs[1] << std::endl;
-        std::cout << "  Strange quark (xf):" << flavor_xfs[2] << std::endl;
-        std::cout << "  Charm quark (xf):  " << flavor_xfs[3] << std::endl;
-        std::cout << "  Bottom quark (xf): " << flavor_xfs[4] << std::endl;
-        std::cout << "  Gluon (xf):        " << flavor_xfs[5] << std::endl;
-    };
+//     auto print_pdfs = [&](double x, double Q2) {
+//         std::vector<double> flavor_xfs = my_pdf_calculator.get_flavor_xf(x, Q2);
+//         std::cout << "\nAt x = " << x << ", Q^2 = " << Q2 << " GeV^2" << std::endl;
+//         std::cout << "  Up quark (xf):     " << flavor_xfs[0] << std::endl;
+//         std::cout << "  Down quark (xf):   " << flavor_xfs[1] << std::endl;
+//         std::cout << "  Strange quark (xf):" << flavor_xfs[2] << std::endl;
+//         std::cout << "  Charm quark (xf):  " << flavor_xfs[3] << std::endl;
+//         std::cout << "  Bottom quark (xf): " << flavor_xfs[4] << std::endl;
+//         std::cout << "  Gluon (xf):        " << flavor_xfs[5] << std::endl;
+//     };
 
-    print_pdfs(x_val_low, Q2_val_low);
-    print_pdfs(x_val_mid, Q2_val_mid);
-    print_pdfs(x_val_high, Q2_val_high);
-    print_pdfs(x_val_low, Q2_val_high); // Check Q2 dependence at low x
+//     print_pdfs(x_val_low, Q2_val_low);
+//     print_pdfs(x_val_mid, Q2_val_mid);
+//     print_pdfs(x_val_high, Q2_val_high);
+//     print_pdfs(x_val_low, Q2_val_high); // Check Q2 dependence at low x
 
-    std::cout << "-----------------------------------" << std::endl;
+//     std::cout << "-----------------------------------" << std::endl;
 
-    return 0;
-}
-*/
+//     return 0;
+// }
+

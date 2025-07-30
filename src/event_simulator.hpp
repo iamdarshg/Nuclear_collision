@@ -1,6 +1,6 @@
 #ifndef EVENT_SIMULATOR_HPP
 #define EVENT_SIMULATOR_HPP
-
+// #include "pdf_evolution.hpp" 
 #include <iostream>
 #include <random>
 #include <cmath>
@@ -11,8 +11,11 @@
 #include "dglap.hpp"
 
 namespace Event {
-
-inline void run_simulation(int num_events, double E_per_nucleon_GeV) {
+extern "C" {
+inline int run_simulation(double E_per_nucleon_GeV) {
+    int num_events = 1000000; // Number of events to simulate
+    std::cout << "Enter the number of events to simulate: ";
+    std::cin >> num_events;
     std::mt19937_64 rng(42);
     std::uniform_real_distribution<double> uniform(0.0, 1.0);
     std::uniform_real_distribution<double> impact_b(0.0, 15.0); // fm
@@ -55,10 +58,10 @@ inline void run_simulation(int num_events, double E_per_nucleon_GeV) {
         double r_fm = 0.5 + 2.0 * uniform(rng); // randomly 0.5–2.5 fm
         auto string_res = StrongForce::compute_string_potential(r_fm);
 
-        if (uniform(rng) < prob) {
-            collisions++;
-            total_weight += prob;
-        }
+
+        collisions++;
+        total_weight += prob;
+        
 
         if (string_res.flux_tube_breaks) {
             broken_flux_tubes++;
@@ -69,8 +72,9 @@ inline void run_simulation(int num_events, double E_per_nucleon_GeV) {
     std::cout << "Estimated effective collisions: " << collisions << "\n";
     std::cout << "Avg. event weight: " << total_weight / num_events << "\n";
     std::cout << "Flux tubes broken: " << broken_flux_tubes << "\n";
+    return collisions;
 }
 
 } // namespace Event
-
+}
 #endif

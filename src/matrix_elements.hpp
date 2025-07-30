@@ -4,6 +4,7 @@
 #include <cmath>
 #include <array>
 #include <random>
+#include "pdf_evolution.hpp"
 
 // Define type alias for 4-momentum (E, px, py, pz)
 using FourVec = std::array<double, 4>;
@@ -107,8 +108,8 @@ namespace Matrix {
 
     // Full corrected scattering amplitude using QCD + QED + PDF
     double compute_amplitude(double x1, double x2, double Q2, double s) {
-        auto xf1 = PDF::get_flavor_xf(x1, Q2);
-        auto xf2 = PDF::get_flavor_xf(x2, Q2);
+        std::vector<double> xf1 = get_flavor_xf(x1, Q2);
+        std::vector<double> xf2 = get_flavor_xf(x2, Q2);
 
         double amp = 0.0;
 
